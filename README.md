@@ -4,6 +4,13 @@ A small Minecraft block and storage calculator for rectangular floors, circular
 floors, rings, and closed hollow boxes. Python 3.11+, no external packages,
 MIT licensed. It runs offline and prints plain text or JSON.
 
+
+[Download the latest release](https://github.com/MrTommyyyy/BuildBudget/releases/latest) · [Report an issue](https://github.com/MrTommyyyy/BuildBudget/issues)
+
+![Tests](https://github.com/MrTommyyyy/BuildBudget/actions/workflows/tests.yml/badge.svg)
+
+**Download format:** Python source ZIP. Python 3.11+ is required; this is not a standalone EXE.
+
 ## Why I'm building this
 
 I like planning Minecraft builds, especially when a project needs a lot of
@@ -17,7 +24,7 @@ real builds, especially where the shape rules could be clearer.
 
 ## Quick start
 
-Download **Code → Download ZIP**, extract the folder, and open a terminal there.
+Download the ZIP under **Assets** on the latest release page, extract the folder, and open a terminal there.
 Install Python 3.11 or newer. On Windows, `py` can replace `python`.
 
 ```sh
