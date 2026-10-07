@@ -3,7 +3,7 @@
 Version: **0.2.0**
 
 A small Minecraft block and storage calculator for rectangular floors, circular
-floors, rings, and closed hollow boxes. Python 3.11+, no external packages,
+floors, rings, vertical walls and closed hollow boxes. Python 3.11+, no external packages,
 MIT licensed. It runs offline and prints plain text or JSON.
 
 
@@ -47,6 +47,7 @@ assume empty containers and one material per slot.
 | Rectangle | Length × width × layers, all positive integers |
 | Circle | Integer block centres satisfy x² + z² ≤ radius²; centred on one block |
 | Ring | Outer circle with all centres at x² + z² ≤ inner radius² removed |
+| Walls | Vertical perimeter without a floor or roof; corners counted once |
 | Box | Closed shell including floor and roof; interior dimensions shrink by twice the wall thickness |
 
 A radius is measured from the centre block, so a solid circle's bounding width
@@ -76,7 +77,7 @@ not open a world, change blocks or write files; redirect JSON output if desired.
 python -m unittest discover -v
 ```
 
-Nine tests include an independent grid enumeration to check circle counts,
+Eleven tests include an independent grid enumeration to check circle counts,
 small-radius cases, ring boundaries, corners in hollow boxes, exact stack and
 shulker boundaries, spare rounding, invalid values and CLI JSON output.
 GitHub Actions runs tests on Windows, macOS and Ubuntu with Python 3.11 and 3.13.
