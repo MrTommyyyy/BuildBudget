@@ -1,5 +1,7 @@
 # BuildBudget
 
+Version: **0.2.0**
+
 A small Minecraft block and storage calculator for rectangular floors, circular
 floors, rings, and closed hollow boxes. Python 3.11+, no external packages,
 MIT licensed. It runs offline and prints plain text or JSON.
@@ -9,7 +11,7 @@ MIT licensed. It runs offline and prints plain text or JSON.
 
 ![Tests](https://github.com/MrTommyyyy/BuildBudget/actions/workflows/tests.yml/badge.svg)
 
-**Download format:** Python source ZIP. Python 3.11+ is required; this is not a standalone EXE.
+**Download format:** a portable Windows x64 ZIP with an executable, plus a separate Python source ZIP.
 
 ## Why I'm building this
 
@@ -22,9 +24,9 @@ to guess the shape of a whole build.
 This is a new project. I'm interested in feedback from people using it to plan
 real builds, especially where the shape rules could be clearer.
 
-## Quick start
+## Quick start from Python source
 
-Download the ZIP under **Assets** on the latest release page, extract the folder, and open a terminal there.
+Download the source ZIP under **Assets** on the latest release page, extract the folder, and open a terminal there.
 Install Python 3.11 or newer. On Windows, `py` can replace `python`.
 
 ```sh
@@ -86,3 +88,15 @@ GitHub Actions runs tests on Windows, macOS and Ubuntu with Python 3.11 and 3.13
 - A browser or desktop view of the same tested calculations.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) and [LICENSE](LICENSE).
+
+## Walls without a floor or roof
+
+```bash
+python build_budget.py walls 20 30 12 --thickness 1 --extra-percent 10
+```
+
+Dimensions include the outside perimeter. Corners count once. Walls extend for the full height with an open top and bottom. A thickness that fills the whole footprint produces a solid prism. Use `box` when you want a floor and roof too.
+
+## Portable Windows download
+
+Choose the `Windows-x64.zip` release asset and extract it. Python is bundled. These are terminal tools: open PowerShell in the extracted folder and run `.\BuildBudget.exe --help`. The separate source ZIP supports Python 3.11+ on other platforms.

@@ -5,7 +5,7 @@ import json
 from math import isqrt
 import sys
 
-VERSION = "0.1.0"
+VERSION = "0.2.0"
 
 
 def positive(value, name):
@@ -38,6 +38,14 @@ def box(length, width, height, thickness=1):
         positive(value, name)
     interior = max(length - 2 * thickness, 0) * max(width - 2 * thickness, 0) * max(height - 2 * thickness, 0)
     return length * width * height - interior
+
+
+def walls(length, width, height, thickness=1):
+    """Vertical perimeter only, with corners counted once; no floor or roof."""
+    for value, name in ((length, "Length"), (width, "Width"), (height, "Height"), (thickness, "Thickness")):
+        positive(value, name)
+    interior = max(length - 2 * thickness, 0) * max(width - 2 * thickness, 0)
+    return (length * width - interior) * height
 
 
 def budget(count, stack_size=64, extra_percent="0"):
@@ -74,7 +82,11 @@ def main(argv=None):
     for dim in ("length", "width", "height"):
         shell.add_argument(dim, type=int)
     shell.add_argument("--thickness", type=int, default=1)
-    for shape in (rect, round_shape, shell):
+    wall = shapes.add_parser("walls", help="Vertical rectangular perimeter without a floor or roof")
+    for dim in ("length", "width", "height"):
+        wall.add_argument(dim, type=int)
+    wall.add_argument("--thickness", type=int, default=1)
+    for shape in (rect, round_shape, shell, wall):
         shape.add_argument("--stack-size", type=int, default=64)
         shape.add_argument("--extra-percent", default="0")
         shape.add_argument("--json", action="store_true")
@@ -84,6 +96,8 @@ def main(argv=None):
             count = rectangle(args.length, args.width, args.layers)
         elif args.shape == "circle":
             count = circle(args.radius, args.inner_radius, args.layers)
+        elif args.shape == "walls":
+            count = walls(args.length, args.width, args.height, args.thickness)
         else:
             count = box(args.length, args.width, args.height, args.thickness)
         result = budget(count, args.stack_size, args.extra_percent)

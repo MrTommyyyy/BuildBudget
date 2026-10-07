@@ -3,7 +3,7 @@ import io
 import json
 import unittest
 
-from build_budget import box, budget, circle, disc, main, rectangle
+from build_budget import box, budget, circle, disc, main, rectangle, walls
 
 
 class GeometryTests(unittest.TestCase):
@@ -27,6 +27,23 @@ class GeometryTests(unittest.TestCase):
         self.assertEqual(box(3, 3, 3), 26)
         self.assertEqual(box(2, 2, 2), 8)
         self.assertEqual(box(5, 5, 5, 2), 124)
+
+    def test_walls_matches_independent_grid_enumeration(self):
+        for length, width, height, thickness in [(3,3,3,1), (5,7,4,2), (2,4,2,3)]:
+            expected = sum(x < thickness or x >= length-thickness or z < thickness or z >= width-thickness
+                           for x in range(length) for z in range(width)) * height
+            self.assertEqual(walls(length, width, height, thickness), expected)
+        self.assertEqual(walls(3, 3, 3), 24)
+        with self.assertRaises(ValueError):
+            walls(3, 3, 3, 0)
+
+    def test_cli_walls_budget(self):
+        output = io.StringIO()
+        with contextlib.redirect_stdout(output):
+            self.assertEqual(main(["walls", "3", "3", "3", "--extra-percent", "10", "--json"]), 0)
+        result = json.loads(output.getvalue())
+        self.assertEqual(result["base_blocks"], 24)
+        self.assertEqual(result["total_blocks"], 27)
 
     def test_exact_stack_and_container_boundaries(self):
         self.assertEqual(budget(64)["loose_blocks"], 0)
